@@ -7,12 +7,40 @@ import 'package:shrikar_fintech_final_assessment/providers/expense_data_provider
 import 'package:shrikar_fintech_final_assessment/ui/screens/login_screen.dart';
 
 
-class DashboardScreen extends ConsumerWidget {
+
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notfier = ref.watch(expenseDataProvider).expenseData;
+  ConsumerState<ConsumerStatefulWidget> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+
+  List<ExpenseData> expenseDataListMain = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.microtask(()async {
+      await ref.read(expenseDataProvider.notifier)
+      .getAllExpenseFromHive()
+      .then((expenseList){
+        setState(() {
+          expenseDataListMain =  expenseList;
+        });
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //]]final notfier = ref.watch(expenseDataProvider).expenseData;
+    if(ref.watch(expenseDataProvider).expenseData != null){
+      expenseDataListMain = ref.watch(expenseDataProvider).expenseData!;
+    }
+   
     return Scaffold(
     body: CustomScrollView(
       slivers: [
@@ -33,14 +61,13 @@ class DashboardScreen extends ConsumerWidget {
                 width: double.infinity,
               ),),
         ),
-        SliverList.builder(itemCount: notfier?.length,itemBuilder: (context, index) {
-          return TransactionDetails(expenseData: notfier![index]);
+        SliverList.builder(itemCount: expenseDataListMain?.length,itemBuilder: (context, index) {
+          return TransactionDetails(expenseData: expenseDataListMain![index]);
         },)
       ],
     ),);
   }
 }
-
 
 class TransactionDetails extends StatelessWidget {
 

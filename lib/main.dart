@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
+import 'package:shrikar_fintech_final_assessment/models/expense_data.dart';
 import 'package:shrikar_fintech_final_assessment/providers/go_router_provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main()async {
+   WidgetsFlutterBinding.ensureInitialized();
+   await Hive.initFlutter();
+   Hive.registerAdapter(ExpenseDataAdapter());
   runApp(const ProviderScope(child: FintechApp()));
-  WidgetsFlutterBinding.ensureInitialized();
+ 
 }
 
 
