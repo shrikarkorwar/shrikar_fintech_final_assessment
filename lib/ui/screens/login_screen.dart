@@ -11,9 +11,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController textEditingController =
-      TextEditingController(text: 'Enter username');
+      TextEditingController(text: '');
   final TextEditingController passwordTextController =
-      TextEditingController(text: 'Enter Password');
+      TextEditingController(text: '');
   final globalKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscuringCharacter: '*',
                   controller: passwordTextController,
                   decoration: InputDecoration(
-                        hintText: 'Enter Username',
+                        hintText: 'Enter password',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide:
