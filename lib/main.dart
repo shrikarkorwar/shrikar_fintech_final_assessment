@@ -4,6 +4,7 @@ import 'package:shrikar_fintech_final_assessment/providers/go_router_provider.da
 
 void main() {
   runApp(const ProviderScope(child: FintechApp()));
+  WidgetsFlutterBinding.ensureInitialized();
 }
 
 

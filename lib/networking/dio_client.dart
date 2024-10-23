@@ -47,6 +47,52 @@ class DioClient {
     }
   }
 
+  Future<Response> post(String path,
+      {dynamic body, Options? option, CancelToken? cancelToken}) async {
+    try {
+      final response = await _dio.post(path,
+          data: body, options: option, cancelToken: cancelToken);
+      return response;
+    } on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  Future<Response> put(String path, dynamic data, Options option,
+      CancelToken cancelToken, Map<String, dynamic>? queryParameters) async {
+    try {
+      final response = await _dio.put(path,
+          data: data,
+          options: option,
+          cancelToken: cancelToken,
+          queryParameters: queryParameters);
+      return response;
+    } on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  Future<Response> delete(String path, dynamic data, Options option,
+      CancelToken cancelToken, Map<String, dynamic>? queryParameters) async {
+    try {
+      final response = await _dio.delete(path,
+          data: data,
+          options: option,
+          cancelToken: cancelToken,
+          queryParameters: queryParameters);
+      return response;
+    } on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+
   String _handleDioError(DioException error) {
     switch (error.type) {
 
